@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SysPool.Views.Bookings"
+    Title="Reservas" 
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="#F0F0F0"
+    IconImageSource="bookings.svg">
+    
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <Label
+                Text="Reservas" 
+                TextColor="Black"
+                FontSize="30"
+                FontFamily="Raleway Medium"
+                Margin="30, 30, 0, 25"/>
+
+            <ActivityIndicator 
+                IsRunning="True"
+                IsVisible="False"
+                Margin="0, 280, 0, 420"
+                Color="#208D2B"
+                HorizontalOptions="CenterAndExpand"
+                x:Name="Loader"/>
+
+            <CollectionView ItemsSource="{Binding}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10">
+                            <Frame
+                HorizontalOptions="Center"
+                BackgroundColor="#F0F0F0"
+                BorderColor="Transparent"
+                HasShadow="True"
+                CornerRadius="15"
+                                MaximumHeightRequest="150"
+                            Padding="0">
+
+                                <Frame.Shadow>
+                                    <Shadow Radius="30" Offset="0, 0" Brush="Black" Opacity="0.20"/>
+                                </Frame.Shadow>
+
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout Padding="0" VerticalOptions="CenterAndExpand">
+                                        <Image Source="{Binding ImagenMesa}" HeightRequest="150" WidthRequest="180" Aspect="AspectFill" Margin="0, 0, 15, 0"/>
+                                        <VerticalStackLayout VerticalOptions="CenterAndExpand">
+                                            <Label
+                            Text="{Binding TipoMesa, StringFormat='Mesa de {0}'}"
+                            TextColor="Black"
+                            FontSize="16"
+                            FontFamily="Raleway Bold"/>
+                                            <Label
+                            Text="{Binding FechaFormateada, StringFormat='Fecha: {0}'}"
+                            TextColor="Black"
+                            FontSize="14"
+                            FontFamily="Raleway Regular"/>
+                                            <Label
+                            Text="{Binding Hora, StringFormat='Hora: {0}'}"
+                            TextColor="Black"
+                            FontSize="14"
+                            FontFamily="Raleway Regular"/>
+                                            <Label
+                                                Text="{Binding Estado}"
+                                                TextColor="{Binding ColorEstado}"
+                                                FontSize="14"
+                                                FontFamily="Raleway Medium"/>
+
+                                            <HorizontalStackLayout 
+                                                HorizontalOptions="CenterAndExpand" 
+                                                Spacing="10" Margin="0, 10, 5, 0">
+                                                <Button 
+                                                    Text="Iniciar"
+                                                    BackgroundColor="#208D2B"
+                                                    FontFamily="Raleway Bold"/>
+                                                <Button 
+                                                    Text="Cancelar"
+                                                    BackgroundColor="#DB3535"
+                                                    FontFamily="Raleway Bold"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

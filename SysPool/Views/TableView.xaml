@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SysPool.Views.TableView"
+             Title="TableView"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F0F0F0">
+    <VerticalStackLayout>
+
+        <HorizontalStackLayout Margin="20, 30, 0, 20">
+            <ImageButton
+                Source="back.svg"
+                HeightRequest="30"
+                WidthRequest="30"
+                Margin="0, 5, 0, 0"
+                Clicked="GoBack"/>
+
+            <Label
+            Text="Volver" 
+            FontSize="30"
+            FontFamily="Raleway Medium"/>
+        </HorizontalStackLayout>
+
+        
+        <VerticalStackLayout>
+            <VerticalStackLayout Padding="20" Spacing="10">
+                <HorizontalStackLayout>
+                    <Label
+                    FontSize="30"
+                    FontFamily="Raleway Medium" 
+                    x:Name="MesaTitle"
+                    HorizontalOptions="Center"/>
+
+                    <Image
+Source="arrow.svg"
+Margin="5, 0, 5, 0"/>
+
+                        <Frame 
+                    HasShadow="False" 
+                    BorderColor="Transparent" 
+                    BackgroundColor="Green" 
+                    CornerRadius="50"
+                    Padding="10, 2">
+                            
+                        <Label
+                    x:Name="MesaEstado"/>
+                    </Frame>
+                </HorizontalStackLayout>
+
+                
+                <Image HeightRequest="160" 
+                       Aspect="AspectFit"
+                       Margin="0, 50, 15, 20"
+                       x:Name="MesaImg"/>
+                
+                <Label
+                    x:Name="MesaId"/>
+                
+
+                <Button Text="Agregar adiciones" FontFamily="Raleway Medium" FontSize="17" Padding="15" BackgroundColor="#3563DB"/>
+                <Button Text="Reservar" FontFamily="Raleway Medium" FontSize="17" Padding="15" BackgroundColor="#208D2B"/>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

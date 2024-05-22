@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SysPool.Views.Bills"
+             Title="Facturas" 
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F0F0F0"
+             IconImageSource="bills.svg">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label
+                Text="Facturas" 
+                TextColor="Black"
+                FontSize="30"
+                FontFamily="Raleway Medium"
+                Margin="30, 30, 0, 20"/>
+
+            <Label
+                Text="Aún no hay facturas." 
+                TextColor="Black"
+                FontSize="16"
+            HorizontalOptions="Center"
+                FontFamily="Raleway Regular"
+                Margin="0, 300, 0, 0" x:Name="noBills"/>
+
+            <VerticalStackLayout Padding="30, 0" Spacing="20">
+                <CollectionView ItemsSource="{Binding}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Spacing="20" Padding="10">
+                                <Frame BorderColor="Transparent" HasShadow="True" BackgroundColor="#F0F0F0">
+                                    <Frame.Shadow>
+                                        <Shadow Radius="30" Offset="0, 0" Brush="Black" Opacity="0.20"/>
+                                    </Frame.Shadow>
+                                    <VerticalStackLayout>
+                                        <Label Text="Billares El Emperador" HorizontalOptions="Center" FontFamily="Raleway Medium" FontSize="20" Margin="0, 0, 0, 10"/>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding fecha, StringFormat='{}{0:dd/MM/yyyy}'}" FontFamily="Raleway Medium" FontSize="16"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="Tiempo: " FontFamily="Raleway Medium" FontSize="16"/>
+                                            <Label Text="{Binding tiempoJugado, StringFormat='{0} horas'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding nombreProducto}" FontFamily="Raleway Medium" FontSize="16"/>
+                                            <Label Text="{Binding cantidad, StringFormat='{0}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Línea horizontal -->
+                                        <BoxView BackgroundColor="#ADADAD" HeightRequest="1" Margin="0, 15, 0, 15"/>
+
+                                        <!-- Subtotal y Total -->
+                                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                                            <Label Text="Subtotal: " FontFamily="Raleway Medium" FontSize="16"/>
+                                            <Label Text="{Binding total, StringFormat='{}{0:C}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                                            <Label Text="Total: " FontFamily="Raleway Medium" FontSize="16"/>
+                                            <Label Text="{Binding totalConImpuestos, StringFormat='{0:C}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </VerticalStackLayout>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

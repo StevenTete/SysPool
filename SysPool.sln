@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysPool", "SysPool\SysPool.csproj", "{16A13AB9-3402-455B-9789-7F9B2CA713DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16A13AB9-3402-455B-9789-7F9B2CA713DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A13AB9-3402-455B-9789-7F9B2CA713DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A13AB9-3402-455B-9789-7F9B2CA713DD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{16A13AB9-3402-455B-9789-7F9B2CA713DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A13AB9-3402-455B-9789-7F9B2CA713DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16A13AB9-3402-455B-9789-7F9B2CA713DD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32D91D24-4CF2-4D61-9892-78C737CBB5F2}
+	EndGlobalSection
+EndGlobal
