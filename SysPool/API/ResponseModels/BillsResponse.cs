@@ -4,7 +4,7 @@
     {
         public DateTime fecha { get; set; }
         public decimal total { get; set; }
-        public decimal totalConImpuestos => total * (impuestos / 10);
+        public decimal totalConImpuestos => total * impuestos;
         public decimal impuestos { get; set; }
         public int cantidad { get; set; }
         public string nombreProducto { get; set; }

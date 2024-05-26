@@ -20,7 +20,7 @@ public partial class Home : ContentPage
             {
                 string response = await _restService.GetResource(Constants.BaseUrl + Constants.Tables);
 
-                List<TablesResponse> tables = JsonConvert.DeserializeObject<List<TablesResponse>>(response);
+                List<TablesResponse> tables = JsonConvert.DeserializeObject<List<TablesResponse>>(response)!;
 
 
                 ObservableCollection<TablesResponse> tablesCollection = new ObservableCollection<TablesResponse>(tables);
@@ -55,7 +55,7 @@ public partial class Home : ContentPage
                     }
                 }
                 string nameResponse = await _restService.GetResource(Constants.BaseUrl + Constants.Users + App.UserID);
-                UsersResponse user = JsonConvert.DeserializeObject<UsersResponse>(nameResponse);
+                UsersResponse user = JsonConvert.DeserializeObject<UsersResponse>(nameResponse)!;
                 WelcomeName.Text = "Bienvenido, " + user.nombre + ".";
             }
             catch (Exception ex)
@@ -65,12 +65,11 @@ public partial class Home : ContentPage
         };
     }
 
-    [Obsolete]
     protected override bool OnBackButtonPressed()
     {
-        Device.BeginInvokeOnMainThread(async () => {
+        MainThread.BeginInvokeOnMainThread(async () => {
 
-            bool result = await DisplayAlert("Confirm", "¿Deseas salir de la aplicación?", "Sí", "No");
+            bool result = await DisplayAlert("Salir", "¿Deseas salir de la aplicación?", "Sí", "No");
 
             if (result)
             {

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             x:Class="SysPool.Views.AdditionsView"
+             BackgroundColor="#F0F0F0"
+                   CornerRadius="40"
+                   HasBackdrop="True"
+                   HasHandle="True"
+                   IsCancelable="True">
+    <the49:BottomSheet.Detents>
+        <the49:HeightDetent Height="700" />
+    </the49:BottomSheet.Detents>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+            
+            <Label Text="+ Adiciones +" FontSize="30" FontFamily="Raleway Bold" HorizontalOptions="Center" Margin="0, 30"/>
+
+
+
+            <ActivityIndicator IsRunning="True" x:Name="Loader" Margin="0, 280, 0, 450"/>
+
+            <CollectionView ItemsSource="{Binding}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="2">
+                            <Frame Padding="5" BackgroundColor="#F0F0F0" BorderColor="Transparent" CornerRadius="8" Margin="4" HasShadow="True">
+                                <Frame.Shadow>
+                                    <Shadow Radius="20" Offset="0, 0" Brush="Black" Opacity="0.15"/>
+                                </Frame.Shadow>
+                                <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                                    <Image Source="{Binding ImagenProducto}" HeightRequest="80" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Nombre}" FontSize="14" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontFamily="Raleway Bold"/>
+                                    <Label Text="{Binding PrecioVenta, StringFormat='${0:F2}'}" FontSize="15" FontFamily="Raleway Medium" HorizontalOptions="Center" TextColor="#208D2B"/>
+                                    <Button Text="Detalles" BackgroundColor="Transparent" TextColor="#3563DB" FontFamily="Raleway Bold" FontSize="15" Padding="0" Clicked="SeeProductDetails" CommandParameter="{Binding .}"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <Button Text="Agregar" BackgroundColor="#208D2B" FontFamily="Raleway Bold" TextColor="White" Clicked="prueba_carro" FontSize="18" Margin="0, 20" Padding="15"/>
+        </VerticalStackLayout>
+
+        </ScrollView>
+</the49:BottomSheet>

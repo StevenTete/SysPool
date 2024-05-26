@@ -1,66 +1,76 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
              x:Class="SysPool.Views.TableView"
              Title="TableView"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#F0F0F0">
-    <VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
 
-        <HorizontalStackLayout Margin="20, 30, 0, 20">
-            <ImageButton
+
+            <HorizontalStackLayout Margin="20, 30, 0, 20">
+                <ImageButton
                 Source="back.svg"
                 HeightRequest="30"
                 WidthRequest="30"
                 Margin="0, 5, 0, 0"
                 Clicked="GoBack"/>
-
-            <Label
-            Text="Volver" 
-            FontSize="30"
-            FontFamily="Raleway Medium"/>
-        </HorizontalStackLayout>
-
-        
-        <VerticalStackLayout>
-            <VerticalStackLayout Padding="20" Spacing="10">
-                <HorizontalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
                     <Label
-                    FontSize="30"
+                    FontSize="20"
                     FontFamily="Raleway Medium" 
                     x:Name="MesaTitle"
                     HorizontalOptions="Center"/>
 
                     <Image
 Source="arrow.svg"
-Margin="5, 0, 5, 0"/>
+Margin="10, 0, 10, 0"/>
 
-                        <Frame 
+                    <Frame 
                     HasShadow="False" 
                     BorderColor="Transparent" 
-                    BackgroundColor="Green" 
+                    BackgroundColor="#208D2B" 
                     CornerRadius="50"
                     Padding="10, 2">
-                            
+
                         <Label
-                    x:Name="MesaEstado"/>
+                    x:Name="MesaEstado" FontFamily="Raleway Regular" FontSize="16" Margin="0, -3, 0, 0" VerticalOptions="Center" TextColor="White"/>
                     </Frame>
                 </HorizontalStackLayout>
+            </HorizontalStackLayout>
 
-                
-                <Image HeightRequest="160" 
+
+            <VerticalStackLayout>
+                <VerticalStackLayout Padding="20" Spacing="10">
+                    <Image HeightRequest="140" 
                        Aspect="AspectFit"
-                       Margin="0, 50, 15, 20"
+                       Margin="0, 0, 0, 20"
                        x:Name="MesaImg"/>
-                
-                <Label
-                    x:Name="MesaId"/>
-                
 
-                <Button Text="Agregar adiciones" FontFamily="Raleway Medium" FontSize="17" Padding="15" BackgroundColor="#3563DB"/>
-                <Button Text="Reservar" FontFamily="Raleway Medium" FontSize="17" Padding="15" BackgroundColor="#208D2B"/>
+                    <Label
+                    x:Name="MesaId" IsVisible="False"/>
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="CenterAndExpand">
+                        <Label Text="Fecha:" FontSize="18" FontFamily="Raleway Bold" VerticalOptions="Center"/>
+                        <DatePicker FontSize="18" VerticalOptions="Center" x:Name="ReserveDate"/>
+                        <Label Text="Hora:" FontSize="18" FontFamily="Raleway Bold" VerticalOptions="Center"/>
+                        <TimePicker FontSize="18" x:Name="ReserveHour" />
+                    </HorizontalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Margin="0, 20, 0, 0">
+                        <Button Text="Reservar mesa" FontFamily="Raleway Medium" FontSize="17" Padding="15" BorderColor="#208D2B" BackgroundColor="Transparent" BorderWidth="1" TextColor="#208D2B"  Clicked="Reserve"/>
+
+                        <Button Text="Agregar adiciones" FontFamily="Raleway Medium" FontSize="17" Padding="15" TextColor="#3563DB" BackgroundColor="Transparent" BorderColor="#3563DB" BorderWidth="1" Clicked="OpenAdditionsView"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <cal:Calendar HorizontalOptions="Center" WidthRequest="350" ArrowsBackgroundColor="Black" ShowYearPicker="False" SelectedDateColor="#208D2B" SelectedDayBackgroundColor="#208D2B" TodayOutlineColor="#208D2B" ArrowsBorderWidth="0" MonthLabelColor="Black" ArrowsColor="White" FooterArrowVisible="False" ArrowsSymbolPrev="&lt;" ArrowsSymbolNext=">" x:Name="bookingCalendar" AnimateCalendar="True">
+                    </cal:Calendar>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>
-
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

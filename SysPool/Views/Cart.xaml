@@ -3,10 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SysPool.Views.Cart"
              Title="Cart">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+            <!--Page Title-->
+            <FlexLayout Margin="25" JustifyContent="SpaceBetween">
+                <Label Text="Adiciones" FontSize="34" FontFamily="Onest" TextColor="Green" FontAttributes="Bold" VerticalOptions="Center"/>
+                <ImageButton Source="logout.svg" WidthRequest="30" HeightRequest="30" HorizontalOptions="End" Clicked="Logout"/>
+            </FlexLayout>
+
+            <VerticalStackLayout>
+                <CollectionView x:Name="productList">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" Margin="0, 0, 0, -20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Padding="0" BackgroundColor="Red" BorderColor="Transparent" CornerRadius="10" MaximumHeightRequest="60" MaximumWidthRequest="60">
+                                    <Image Source="{Binding imagenProducto}" Aspect="AspectFill" BackgroundColor="Green" HeightRequest="60" WidthRequest="60"/>
+                                </Frame>
+
+
+                                <VerticalStackLayout Grid.Column="1" Padding="10" VerticalOptions="Center">
+                                    <Label Text="{Binding nombreProducto}" FontSize="16" FontFamily="Onest" TextColor="#000f00" FontAttributes="Bold"/>
+                                    <Label Text="{Binding cantidadSeleccionada, StringFormat='Quantity: {0}'}" FontSize="14" FontFamily="Onest" TextColor="#000f00"/>
+                                    <Label Text="{Binding precio, StringFormat='Price: ${0}'}" FontSize="14" FontFamily="Onest" TextColor="#000f00" FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <ImageButton Grid.Column="2" Source="delete.svg" WidthRequest="30" HeightRequest="30" Clicked="DeleteProduct" CommandParameter="{Binding idProducto}" VerticalOptions="CenterAndExpand"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <Frame Padding="0" HorizontalOptions="Center" Margin="0, 30, 0, 0" BackgroundColor="Transparent" BorderColor="Green">
+                <FlexLayout HeightRequest="50" JustifyContent="Center" WidthRequest="367">
+                    <Label Text="Subtotal:" TextColor="Black" FontSize="20" FontAttributes="Bold" x:Name="subTotalLabel" Margin="0, 0, 15, 0" VerticalOptions="Center"/>
+                    <Label Text="Total:" TextColor="Black" FontSize="20" FontAttributes="Bold" x:Name="totalLabel" VerticalOptions="Center"/>
+                </FlexLayout>
+            </Frame>
+
+            <Button Text="Checkout" BackgroundColor="Green" TextColor="White" FontSize="20" FontFamily="Onest" FontAttributes="Bold" Margin="0, 20" Padding="15" WidthRequest="370" Clicked="Checkout"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

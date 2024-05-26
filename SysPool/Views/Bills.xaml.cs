@@ -15,6 +15,8 @@ public partial class Bills : ContentPage
 
         this.Appearing += async (sender, e) =>
         {
+            Loader.IsVisible = true;
+
             try
             {
                 string response = await _restService.GetResource(Constants.BaseUrl + Constants.Bills + App.UserID);
@@ -27,11 +29,11 @@ public partial class Bills : ContentPage
 
                 noBills.IsVisible = false;
 
-                List<BillsResponse> bills = JsonConvert.DeserializeObject<List<BillsResponse>>(response);
+                List<BillsResponse> bills = JsonConvert.DeserializeObject<List<BillsResponse>>(response)!;
 
                 BindingContext = bills;
 
-
+                Loader.IsVisible = false;
             }
             catch (Exception ex)
             {

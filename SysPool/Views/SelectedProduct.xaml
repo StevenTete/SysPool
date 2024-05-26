@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             x:Class="SysPool.Views.SelectedProduct"
+             BackgroundColor="#F0F0F0"
+             CornerRadius="40"
+             HasBackdrop="True"
+             HasHandle="True"
+             IsCancelable="True">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <ImageButton
+                Source="back.svg" Clicked="BackToHome"
+                        HorizontalOptions="Start"/>
+
+            <Image x:Name="ProductImage"
+                   Aspect="AspectFill"
+                   HeightRequest="280"
+               WidthRequest="420"
+                   HorizontalOptions="Center"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label x:Name="ProductName"
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="Black" Margin="0, 0, 5, 0"
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                <Frame Padding="0" Margin="0" HorizontalOptions="Center" CornerRadius="50" MaximumHeightRequest="30" BorderColor="Transparent">
+                    <Label x:Name="ProductStock"
+                   TextColor="White" FontAttributes="Bold"
+                       BackgroundColor="Green" Padding="7" Margin="0"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </Frame>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="$ "
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="Black" Margin="0, 0, 5, 0"
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="ProductPrice"
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="Black" Margin="0, 0, 5, 0"
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                <Label Text="💸"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="Black" Margin="0, 0, 5, 0"
+                HorizontalOptions="Center" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+
+            <Label x:Name="ProductId" IsVisible="False"/>
+
+            <Label x:Name="ProductDescription"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+
+
+                <Label Text="Number:"
+                       FontSize="16"
+                       VerticalOptions="Center"/>
+
+                <Label x:Name="quantityLabel"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           Margin="5,0,0,0"
+                           Text="1"/>
+            </HorizontalStackLayout>
+
+
+            <Stepper x:Name="quantityStepper"
+                     Minimum="1"
+                     Value="1"
+                     Increment="1"
+                     ValueChanged="Counter"
+                     HorizontalOptions="Center"/>
+
+
+            <Button Text="Buy"
+                    HorizontalOptions="Center"
+                    TextColor="White"
+                    FontSize="20"
+                    HeightRequest="50"
+                    WidthRequest="400"
+                    Margin="0, 0, 0, -10"
+                    Clicked="BuyProduct"/>
+
+            <Button Text="Add to shopping cart"
+                    HorizontalOptions="Center"
+                    TextColor="White"
+                    FontSize="20"
+                    HeightRequest="50"
+                    WidthRequest="400"
+                    Clicked="AddToCart"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</the49:BottomSheet>

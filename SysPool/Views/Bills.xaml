@@ -15,10 +15,19 @@
                 FontFamily="Raleway Medium"
                 Margin="30, 30, 0, 20"/>
 
+            <ActivityIndicator 
+                IsRunning="True"
+                IsVisible="False"
+                Margin="0, 280, 0, 420"
+                Color="#208D2B"
+                HorizontalOptions="CenterAndExpand"
+                x:Name="Loader"/>
+
             <Label
                 Text="Aún no hay facturas." 
                 TextColor="Black"
                 FontSize="16"
+                IsVisible="False"
             HorizontalOptions="Center"
                 FontFamily="Raleway Regular"
                 Margin="0, 300, 0, 0" x:Name="noBills"/>
@@ -33,30 +42,32 @@
                                         <Shadow Radius="30" Offset="0, 0" Brush="Black" Opacity="0.20"/>
                                     </Frame.Shadow>
                                     <VerticalStackLayout>
-                                        <Label Text="Billares El Emperador" HorizontalOptions="Center" FontFamily="Raleway Medium" FontSize="20" Margin="0, 0, 0, 10"/>
-                                        <HorizontalStackLayout>
-                                            <Label Text="{Binding fecha, StringFormat='{}{0:dd/MM/yyyy}'}" FontFamily="Raleway Medium" FontSize="16"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout>
+                                        <Label Text="SysPool Reservation" HorizontalOptions="Center" FontFamily="Raleway Bold" FontSize="20" Margin="0, 0, 0, 10"/>
+                                        
+                                        <Label Text="{Binding fecha, StringFormat='{0:dd/MM/yyyy}'}" FontFamily="Raleway Medium" FontSize="16"/>
+                                        
+                                            <HorizontalStackLayout>
                                             <Label Text="Tiempo: " FontFamily="Raleway Medium" FontSize="16"/>
                                             <Label Text="{Binding tiempoJugado, StringFormat='{0} horas'}" FontFamily="Raleway Regular" FontSize="16"/>
                                         </HorizontalStackLayout>
                                         <HorizontalStackLayout>
                                             <Label Text="{Binding nombreProducto}" FontFamily="Raleway Medium" FontSize="16"/>
-                                            <Label Text="{Binding cantidad, StringFormat='{0}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                            <Label Text="{Binding cantidad, StringFormat=' x{0}'}" FontFamily="Raleway Regular" FontSize="16"/>
                                         </HorizontalStackLayout>
 
                                         <!-- Línea horizontal -->
                                         <BoxView BackgroundColor="#ADADAD" HeightRequest="1" Margin="0, 15, 0, 15"/>
 
-                                        <!-- Subtotal y Total -->
-                                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
-                                            <Label Text="Subtotal: " FontFamily="Raleway Medium" FontSize="16"/>
-                                            <Label Text="{Binding total, StringFormat='{}{0:C}'}" FontFamily="Raleway Regular" FontSize="16"/>
-                                        </HorizontalStackLayout>
-                                        <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
-                                            <Label Text="Total: " FontFamily="Raleway Medium" FontSize="16"/>
-                                            <Label Text="{Binding totalConImpuestos, StringFormat='{0:C}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                        <HorizontalStackLayout Spacing="10">
+                                            <!-- Subtotal y Total -->
+                                            <HorizontalStackLayout HorizontalOptions="Center">
+                                                <Label Text="Subtotal: " FontFamily="Raleway Medium" FontSize="16"/>
+                                                <Label Text="{Binding total, StringFormat='{0:C}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                            </HorizontalStackLayout>
+                                            <HorizontalStackLayout Spacing="0" HorizontalOptions="Center">
+                                                <Label Text="Total: " FontFamily="Raleway Medium" FontSize="16"/>
+                                                <Label Text="{Binding totalConImpuestos, StringFormat='{0:C}'}" FontFamily="Raleway Regular" FontSize="16"/>
+                                            </HorizontalStackLayout>
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                 </Frame>

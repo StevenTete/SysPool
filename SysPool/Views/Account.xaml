@@ -82,7 +82,7 @@
                             <Frame.Shadow>
                                 <Shadow Radius="40" Offset="0, 10" Brush="Black" Opacity="0.20"/>
                             </Frame.Shadow>
-                            <Entry Placeholder="Nombre" Text="" FontFamily="Raleway Regular" FontSize="16" IsPassword="True" x:Name="newPassword"/>
+                            <Entry Placeholder="Nueva contraseña" Text="" FontFamily="Raleway Regular" FontSize="16" IsPassword="True" x:Name="newPassword"/>
                         </Frame>
                     </VerticalStackLayout>
 
@@ -92,7 +92,7 @@
                             <Frame.Shadow>
                                 <Shadow Radius="40" Offset="0, 10" Brush="Black" Opacity="0.20"/>
                             </Frame.Shadow>
-                            <Entry Placeholder="Nombre" Text="" FontFamily="Raleway Regular" FontSize="16" IsPassword="True" x:Name="confirmPassword"/>
+                            <Entry Placeholder="Confirmar contraseña" Text="" FontFamily="Raleway Regular" FontSize="16" IsPassword="True" x:Name="confirmPassword"/>
                         </Frame>
                     </VerticalStackLayout>
 

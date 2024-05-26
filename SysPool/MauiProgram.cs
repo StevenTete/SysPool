@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using The49.Maui.BottomSheet;
 
 namespace SysPool
 {
@@ -11,6 +12,7 @@ namespace SysPool
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiCommunityToolkit()
+                .UseBottomSheet()
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {
