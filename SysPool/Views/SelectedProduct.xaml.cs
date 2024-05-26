@@ -11,6 +11,7 @@ public partial class SelectedProduct : BottomSheet
 {
     private readonly RestService _restService;
     private readonly LocalDbService _dbService;
+    private readonly HttpClient _client;
 
 
     public SelectedProduct(int productId)
@@ -19,6 +20,7 @@ public partial class SelectedProduct : BottomSheet
 
         _restService = new RestService();
         _dbService = new LocalDbService();
+        _client = new HttpClient();
         getInfo(productId);
     }
 
@@ -78,7 +80,7 @@ public partial class SelectedProduct : BottomSheet
         try
         {
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.PostAsync( Constants.BaseUrl + Constants.Bills, new StringContent(
+            HttpResponseMessage response = await client.PostAsync( Constants.BaseUrl + Constants.BillDetails, new StringContent(
                 JsonConvert.SerializeObject(new
                 {
                     idProducto = ProductId.Text,
@@ -100,35 +102,34 @@ public partial class SelectedProduct : BottomSheet
         }
     }
 
-    private void BackToHome(object sender, EventArgs e)
-    {
-        Navigation.PopAsync();
-    }
 
     internal async void getInfo(int idProductoSeleccionado)
     {
         try
         {
-            string response_producto = await _restService.GetResource(Constants.BaseUrl + Constants.Products + idProductoSeleccionado);
-            ProductsResponse product = JsonConvert.DeserializeObject<ProductsResponse>(response_producto)!;
+            HttpResponseMessage response_producto = await _client.GetAsync(Constants.BaseUrl + Constants.Products + idProductoSeleccionado);
 
-            string response_inventario = await _restService.GetResource($"https://9fb4-2800-484-4285-f400-69ba-39c4-dea-8efb.ngrok-free.app/api/inventario/");
+            string content = await response_producto.Content.ReadAsStringAsync();
 
-            List<InventarioResponse> product_stock = JsonConvert.DeserializeObject<List<InventarioResponse>>(response_inventario)!;
+            ProductsResponse product = JsonConvert.DeserializeObject<ProductsResponse>(content)!;
 
-            InventarioResponse productInventario = product_stock.FirstOrDefault(p => p.ProductoId == idProductoSeleccionado)!;
+            HttpResponseMessage response_inventario = await _client.GetAsync(Constants.BaseUrl + Constants.Stock);
+
+            string response_inventario_string = await response_inventario.Content.ReadAsStringAsync();
+
+            List<InventarioResponse> product_stock = JsonConvert.DeserializeObject<List<InventarioResponse>>(response_inventario_string);
+
+            InventarioResponse productInventario = product_stock.FirstOrDefault(p => p.ProductoId == idProductoSeleccionado);
 
             BindingContext = product;
             BindingContext = product_stock;
 
-            ProductName.Text = product?.Nombre;
-            ProductId.Text = product?.IdProducto.ToString();
-            ProductStock.Text = "Stock: " + productInventario?.Stock.ToString();
-            ProductDescription.Text = product?.Descripcion;
-            ProductImage.Source = product?.ImagenProducto;
-            ProductPrice.Text = product?.PrecioVenta.ToString();
-
-            quantityStepper.Maximum = productInventario.Stock;
+            ProductName.Text = product.Nombre;
+            ProductId.Text = product.ProductoId.ToString();
+            ProductStock.Text = "(" + productInventario?.Stock.ToString() + ")";
+            ProductImage.Source = product.ImagenProducto;
+            ProductPrice.Text = product.PrecioVenta.ToString();
+            cantidadDisponible.Text = productInventario.Stock.ToString();
 
 
         }
@@ -136,9 +137,5 @@ public partial class SelectedProduct : BottomSheet
         {
             Extra.ShowToast(ex.Message);
         }
-
-
-
-}
-
+    }
 }

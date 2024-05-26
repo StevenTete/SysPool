@@ -8,8 +8,6 @@
              BackgroundColor="#F0F0F0">
     <ScrollView>
         <VerticalStackLayout>
-
-
             <HorizontalStackLayout Margin="20, 30, 0, 20">
                 <ImageButton
                 Source="back.svg"
@@ -67,8 +65,41 @@ Margin="10, 0, 10, 0"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout>
-                    <cal:Calendar HorizontalOptions="Center" WidthRequest="350" ArrowsBackgroundColor="Black" ShowYearPicker="False" SelectedDateColor="#208D2B" SelectedDayBackgroundColor="#208D2B" TodayOutlineColor="#208D2B" ArrowsBorderWidth="0" MonthLabelColor="Black" ArrowsColor="White" FooterArrowVisible="False" ArrowsSymbolPrev="&lt;" ArrowsSymbolNext=">" x:Name="bookingCalendar" AnimateCalendar="True">
+                    <cal:Calendar 
+                        Events="{Binding Events}"
+                        EventsScrollViewVisible="True" 
+                        HorizontalOptions="Center" 
+                        WidthRequest="350" 
+                        ArrowsBackgroundColor="Black" 
+                        ShowYearPicker="False" 
+                        SelectedDateColor="#208D2B" 
+                        SelectedDayBackgroundColor="#208D2B" 
+                        TodayOutlineColor="#208D2B" 
+                        ArrowsBorderWidth="0" 
+                        MonthLabelColor="Black" 
+                        ArrowsColor="White" 
+                        FooterArrowVisible="False"
+                        ArrowsSymbolPrev="&lt;"
+                        ArrowsSymbolNext=">" 
+                        x:Name="bookingCalendar"
+                        AnimateCalendar="True"
+                        EventIndicatorColor="#208D2B"
+                        EventIndicatorSelectedColor="#208D2B"
+                        SelectedDayTextColor="White">
+
+                        <cal:Calendar.EventTemplate>
+                            <DataTemplate>
+                                <HorizontalStackLayout HorizontalOptions="Center" Margin="0, 10" Spacing="10">
+                                    <Label Text="{Binding Name}" FontSize="24" FontAttributes="Bold" FontFamily="Raleway Bold" HorizontalTextAlignment="Center"/>
+                                    <Label 
+                                        FontFamily="Raleway Regular"
+                                        Text="{Binding Date}" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="20"
+                                           HorizontalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </cal:Calendar.EventTemplate>
                     </cal:Calendar>
+                    
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>

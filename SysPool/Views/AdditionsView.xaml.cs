@@ -8,27 +8,30 @@ namespace SysPool.Views;
 
 public partial class AdditionsView : BottomSheet
 {
+    private readonly HttpClient _httpClient;
     private readonly RestService _restService;
 
     public AdditionsView()
     {
         InitializeComponent();
         _restService = new RestService();
+        _httpClient = new HttpClient();
         GetProducts();
     }
 
 
-    private void SeeProductDetails(object sender, EventArgs e)
+    private async void SeeProductDetails(object sender, EventArgs e)
     {
-        Button? button = sender as Button;
+        Button button = sender as Button;
         if (button != null)
         {
-            ProductsResponse? product = button.CommandParameter as ProductsResponse;
+            ProductsResponse product = button.CommandParameter as ProductsResponse;
             if (product != null)
             {
-                int productId = product.IdProducto;
-                SelectedProduct productView = new SelectedProduct(productId);
-                productView.ShowAsync();
+                int productoSeleccionado = product.ProductoId;
+
+                SelectedProduct productView = new SelectedProduct(productoSeleccionado);
+                await productView.ShowAsync();
             }
         }
     }
@@ -47,11 +50,10 @@ public partial class AdditionsView : BottomSheet
     {
         try
         {
-            var response = await _restService.GetResource(Constants.BaseUrl + Constants.Products);
+            HttpResponseMessage response = await _httpClient.GetAsync(Constants.BaseUrl + Constants.Products);
+            string content = await response.Content.ReadAsStringAsync();
+            List<ProductsResponse> products = JsonConvert.DeserializeObject<List<ProductsResponse>>(content)!;
 
-            List<ProductsResponse> products = JsonConvert.DeserializeObject<List<ProductsResponse>>(response)!;
-
-            // Hide the loading indicator in 1 second
             await Task.Delay(800);
             Loader.IsVisible = false;
 

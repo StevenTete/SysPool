@@ -8,15 +8,11 @@
              HasBackdrop="True"
              HasHandle="True"
              IsCancelable="True">
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-
-            <ImageButton
-                Source="back.svg" Clicked="BackToHome"
-                        HorizontalOptions="Start"/>
+    <VerticalStackLayout>
+        <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="End">
 
             <Image x:Name="ProductImage"
-                   Aspect="AspectFill"
+                   Aspect="AspectFit"
                    HeightRequest="280"
                WidthRequest="420"
                    HorizontalOptions="Center"/>
@@ -24,43 +20,40 @@
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label x:Name="ProductName"
                FontSize="24"
+                       FontFamily="Raleway Bold"
                FontAttributes="Bold"
                TextColor="Black" Margin="0, 0, 5, 0"
                HorizontalOptions="Center" VerticalOptions="Center"/>
 
-                <Frame Padding="0" Margin="0" HorizontalOptions="Center" CornerRadius="50" MaximumHeightRequest="30" BorderColor="Transparent">
-                    <Label x:Name="ProductStock"
-                   TextColor="White" FontAttributes="Bold"
-                       BackgroundColor="Green" Padding="7" Margin="0"
-                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-                </Frame>
+                <Label x:Name="ProductStock"
+                   FontAttributes="Bold"
+                       FontSize="20"
+                       Margin="0, 4, 0, 0"
+                       FontFamily="Raleway Light"
+                       TextColor="#208D2B" 
+                   HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout HorizontalOptions="Center">
-                <Label Text="$ "
-               FontSize="24"
-               FontAttributes="Bold"
-               TextColor="Black" Margin="0, 0, 5, 0"
-               HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label
+                    FontSize="24"
+                    Text="$"
+                    FontAttributes="Bold"
+                    TextColor="Black" Margin="0, 0, 5, 0"
+                    HorizontalOptions="Center" 
+                    VerticalOptions="Center"/>
+                
                 <Label x:Name="ProductPrice"
-               FontSize="24"
-               FontAttributes="Bold"
-               TextColor="Black" Margin="0, 0, 5, 0"
-               HorizontalOptions="Center" VerticalOptions="Center"/>
-
-                <Label Text="💸"
-                FontSize="24"
-                FontAttributes="Bold"
-                TextColor="Black" Margin="0, 0, 5, 0"
-                HorizontalOptions="Center" VerticalOptions="Center"/>
+   FontSize="24"
+   FontAttributes="Bold"
+   TextColor="Black" Margin="0, 0, 5, 0"
+   HorizontalOptions="Center" VerticalOptions="Center"/>
             </HorizontalStackLayout>
+            
 
+                <Label x:Name="ProductId" IsVisible="False"/>
 
-            <Label x:Name="ProductId" IsVisible="False"/>
-
-            <Label x:Name="ProductDescription"
-                   TextColor="Black"
-                   HorizontalOptions="Center"/>
+            <Label x:Name="cantidadDisponible" IsVisible="False"/>
 
 
             <HorizontalStackLayout HorizontalOptions="Center">
@@ -86,22 +79,15 @@
                      HorizontalOptions="Center"/>
 
 
-            <Button Text="Buy"
-                    HorizontalOptions="Center"
-                    TextColor="White"
+            <Button Text="Agregar a la reserva"
                     FontSize="20"
-                    HeightRequest="50"
-                    WidthRequest="400"
                     Margin="0, 0, 0, -10"
-                    Clicked="BuyProduct"/>
-
-            <Button Text="Add to shopping cart"
-                    HorizontalOptions="Center"
-                    TextColor="White"
-                    FontSize="20"
-                    HeightRequest="50"
-                    WidthRequest="400"
-                    Clicked="AddToCart"/>
+                    FontFamily="Raleway Bold"
+                    BorderColor="#208D2B"
+                    BackgroundColor="Transparent"
+                    BorderWidth="1"
+                    TextColor="#208D2B"
+                    Clicked="BuyProduct" Padding="15"/>
         </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </the49:BottomSheet>

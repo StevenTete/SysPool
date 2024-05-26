@@ -2,17 +2,29 @@ using SysPool.API;
 using Newtonsoft.Json;
 using SysPool.API.ResponseModels;
 using System.Text;
-using The49.Maui.BottomSheet;
+using Plugin.Maui.Calendar.Models;
 
 namespace SysPool.Views;
 
 public partial class TableView : ContentPage
 {
-	private readonly RestService _restService;
+    public EventCollection Events { get; set; }
+    private readonly RestService _restService;
     private readonly HttpClient _client = new HttpClient();
     public TableView(int TableId)
 	{
 		InitializeComponent();
+
+        Events = new EventCollection
+        {
+            [DateTime.Now] = new List<EventModel>
+                {
+                    new EventModel { Name = "Cool event1", Date = DateTime.Now.ToString("yyyy, MM, dd") },
+                    new EventModel { Name = "Cool event2", Date = DateTime.Now.ToString("yyyy, MM, dd") }
+                }
+        };
+
+        BindingContext = this;
 
         _restService = new RestService();
 
@@ -66,7 +78,7 @@ public partial class TableView : ContentPage
                 UsuarioId = App.UserID,
                 MesaId = int.Parse(MesaId.Text),
                 FechaReserva = ReserveDate.Date.ToString("yyyy-MM-dd"),
-                HoraReserva = ReserveHour.Time,
+                HoraReserva = ReserveHour.Time.ToString(@"hh\:mm\:ss"),
                 Estado = "Pendiente"
             }), Encoding.UTF8, "application/json");
 
@@ -92,5 +104,11 @@ public partial class TableView : ContentPage
         // Abrir el bottomsheet existente AdditionsView
         AdditionsView additionsView = new AdditionsView();
         additionsView.ShowAsync(this.Window);
+    }
+
+    internal class EventModel
+    {
+        public string Name { get; set; }
+        public string Date { get; set; }
     }
 }

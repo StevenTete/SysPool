@@ -32,7 +32,7 @@ namespace SysPool
                 if (result != null && result.Message == "Login successful")
                 {
                     App.UserID = result.UserId;
-                    
+
                     await Navigation.PushAsync(new Menu());
                 }
                 else
@@ -42,7 +42,7 @@ namespace SysPool
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", ex.Message, "OK");
+                await DisplayAlert("Error interno", ex.Message, "OK");
             }
             finally
             {
@@ -55,10 +55,10 @@ namespace SysPool
             Navigation.PushAsync(new RegisterView());
         }
 
-        [Obsolete]
         protected override bool OnBackButtonPressed()
         {
-            Device.BeginInvokeOnMainThread(async () => {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
 
                 bool result = await DisplayAlert("Confirm", "¿Deseas salir de la aplicación?", "Sí", "No");
 

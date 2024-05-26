@@ -19,7 +19,7 @@ public partial class Bills : ContentPage
 
             try
             {
-                string response = await _restService.GetResource(Constants.BaseUrl + Constants.Bills + App.UserID);
+                string response = await _restService.GetResource(Constants.BaseUrl + Constants.UserBills + App.UserID);
 
                 if (response == "0")
                 {
