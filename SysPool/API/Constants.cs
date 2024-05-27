@@ -2,7 +2,7 @@
 {
     public class Constants
     {
-        public static string BaseUrl = "https://d0c0-2800-e2-407f-fd84-2156-7bf4-6313-6f7e.ngrok-free.app/api/";
+        public static string BaseUrl = "https://ba43-2800-e2-407f-fd84-e51f-8a15-8c27-44d0.ngrok-free.app/api/";
         public static string Users = "usuarios/";
         public static string Tables = "mesas/";
         public static string Categories = "categorias/";

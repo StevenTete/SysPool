@@ -3,71 +3,109 @@ using Newtonsoft.Json;
 using SysPool.API.ResponseModels;
 using System.Text;
 using Plugin.Maui.Calendar.Models;
+using System.Net.Http;
 
 namespace SysPool.Views;
 
 public partial class TableView : ContentPage
 {
-    public EventCollection Events { get; set; }
+    public Dictionary<DateTime, List<EventModel>> Events { get; set; } = new Dictionary<DateTime, List<EventModel>>();
     private readonly RestService _restService;
     private readonly HttpClient _client = new HttpClient();
-    public TableView(int TableId)
-	{
-		InitializeComponent();
+    private int _tableId;
 
-        Events = new EventCollection
-        {
-            [DateTime.Now] = new List<EventModel>
-                {
-                    new EventModel { Name = "Cool event1", Date = DateTime.Now.ToString("yyyy, MM, dd") },
-                    new EventModel { Name = "Cool event2", Date = DateTime.Now.ToString("yyyy, MM, dd") }
-                }
-        };
-
-        BindingContext = this;
-
+    public TableView(int tableId)
+    {
+        InitializeComponent();
+        _tableId = tableId;
         _restService = new RestService();
-
         ReserveDate.MinimumDate = DateTime.Now;
         ReserveHour.Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
         bookingCalendar.Culture = new System.Globalization.CultureInfo("es");
-
-        this.Appearing += async (sender, e) =>
-        {
-            try
-            {
-                string response = await _restService.GetResource(Constants.BaseUrl + Constants.Tables + TableId);
-                TablesResponse table = JsonConvert.DeserializeObject<TablesResponse>(response)!;
-
-                MesaTitle.Text = "Mesa de " + table.Tipo;
-
-                MesaId.Text = table.MesaId.ToString();
-
-
-                switch (table.Tipo)
-                {
-                    case "Pool":
-                        table.ImagenMesa = "pooltable";
-                        break;
-                    case "Carambolas":
-                        table.ImagenMesa = "freebilliardtable";
-                        break;
-                }
-
-                MesaEstado.Text = table.Estado;
-                MesaImg.Source = table.ImagenMesa;
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Error", ex.Message, "OK");
-            }
-        };
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await InitializeTableDetails(_tableId);
+        await LoadBookingsAsync(_tableId);
+    }
+
+    private async Task InitializeTableDetails(int tableId)
+    {
+        try
+        {
+            string response = await _restService.GetResource(Constants.BaseUrl + Constants.Tables + tableId);
+            TablesResponse table = JsonConvert.DeserializeObject<TablesResponse>(response);
+
+            MesaTitle.Text = "Mesa de " + table.Tipo;
+            MesaId.Text = table.MesaId.ToString();
+            switch (table.Tipo)
+            {
+                case "Pool":
+                    MesaImg.Source = "pooltable";
+                    break;
+                case "Carambolas":
+                    MesaImg.Source = "freebilliardtable";
+                    break;
+            }
+            MesaEstado.Text = table.Estado;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+    }
+
+    private async Task LoadBookingsAsync(int tableId)
+    {
+        try
+        {
+            string response = await _client.GetStringAsync(Constants.BaseUrl + "reservas/mesa/" + tableId);
+            var bookings = JsonConvert.DeserializeObject<List<BookingsResponse>>(response);
+
+            EventCollection eventCollection = new EventCollection();
+
+            foreach (var booking in bookings)
+            {
+                DateTime bookingDate = DateTime.Parse(booking.FechaFormateada); // Asume que esto está correcto y no lo modifica
+
+                // Si la fecha ya tiene eventos, copia esos eventos a una nueva lista y añade el nuevo
+                if (eventCollection.ContainsKey(bookingDate))
+                {
+                    // Copiar los eventos existentes a una nueva lista
+                    var existingEvents = new List<EventModel>((IEnumerable<EventModel>)eventCollection[bookingDate]);
+                    existingEvents.Add(new EventModel { Name = "Mesa ocupada a las ", Hour = booking.Hora });
+
+                    // Reasignar la nueva lista al diccionario
+                    eventCollection[bookingDate] = existingEvents;
+                }
+                else
+                {
+                    // Si no hay eventos para esa fecha, crea una nueva lista y agrega el evento
+                    eventCollection[bookingDate] = new List<EventModel>
+        {
+            new EventModel { Name = "Mesa ocupada a las ", Hour = booking.Hora }
+        };
+                }
+            }
+
+
+            bookingCalendar.Events = eventCollection;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+    }
+
+
 
     private void GoBack(object sender, EventArgs e)
     {
         Navigation.PopAsync();
     }
+
     private async void Reserve(object sender, EventArgs e)
     {
         try
@@ -77,8 +115,8 @@ public partial class TableView : ContentPage
             {
                 UsuarioId = App.UserID,
                 MesaId = int.Parse(MesaId.Text),
-                FechaReserva = ReserveDate.Date.ToString("yyyy-MM-dd"),
-                HoraReserva = ReserveHour.Time.ToString(@"hh\:mm\:ss"),
+                Fecha = ReserveDate.Date,
+                Hora = ReserveHour.Time,
                 Estado = "Pendiente"
             }), Encoding.UTF8, "application/json");
 
@@ -92,11 +130,11 @@ public partial class TableView : ContentPage
             {
                 await DisplayAlert("Error", "Error al agregar la reserva", "Ok");
             }
-        }catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             await DisplayAlert("Error", ex.Message, "Ok");
         }
-
     }
 
     private void OpenAdditionsView(object sender, EventArgs e)
@@ -106,9 +144,9 @@ public partial class TableView : ContentPage
         additionsView.ShowAsync(this.Window);
     }
 
-    internal class EventModel
+    public class EventModel
     {
         public string Name { get; set; }
-        public string Date { get; set; }
+        public TimeSpan Hour { get; set; }
     }
 }

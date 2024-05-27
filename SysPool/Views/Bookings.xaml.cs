@@ -53,7 +53,7 @@ public partial class Bookings : ContentPage, INotifyPropertyChanged
             if (result)
             {
                 var button = sender as Button;
-                var booking = button?.CommandParameter as BookingsResponse;
+                BookingsResponse? booking = button?.CommandParameter as BookingsResponse;
 
                 if (booking != null)
                 {

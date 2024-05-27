@@ -67,7 +67,8 @@ public partial class Home : ContentPage
 
     protected override bool OnBackButtonPressed()
     {
-        MainThread.BeginInvokeOnMainThread(async () => {
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
 
             bool result = await DisplayAlert("Salir", "¿Deseas salir de la aplicación?", "Sí", "No");
 

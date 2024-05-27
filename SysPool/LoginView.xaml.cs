@@ -60,7 +60,7 @@ namespace SysPool
             MainThread.BeginInvokeOnMainThread(async () =>
             {
 
-                bool result = await DisplayAlert("Confirm", "¿Deseas salir de la aplicación?", "Sí", "No");
+                bool result = await DisplayAlert("Salir", "¿Deseas salir de la aplicación?", "Sí", "No");
 
                 if (result)
                 {

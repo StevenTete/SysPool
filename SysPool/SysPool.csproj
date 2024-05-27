@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.jpg" Color="#022221" />
+		<MauiIcon Include="Resources\AppIcon\appicon.webp" Color="#e6fdec" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.jpg" Color="#022221" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.jpg" Color="#e6fdec" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
