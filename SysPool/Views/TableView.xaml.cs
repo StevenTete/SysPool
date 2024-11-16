@@ -36,7 +36,7 @@ public partial class TableView : ContentPage
         try
         {
             string response = await _restService.GetResource(Constants.BaseUrl + Constants.Tables + tableId);
-            TablesResponse table = JsonConvert.DeserializeObject<TablesResponse>(response);
+            TablesResponse table = JsonConvert.DeserializeObject<TablesResponse>(response)!;
 
             MesaTitle.Text = "Mesa de " + table.Tipo;
             MesaId.Text = table.MesaId.ToString();
@@ -68,9 +68,8 @@ public partial class TableView : ContentPage
 
             foreach (var booking in bookings)
             {
-                DateTime bookingDate = DateTime.Parse(booking.FechaFormateada); // Asume que esto está correcto y no lo modifica
+                DateTime bookingDate = DateTime.Parse(booking.FechaFormateada);
 
-                // Si la fecha ya tiene eventos, copia esos eventos a una nueva lista y añade el nuevo
                 if (eventCollection.ContainsKey(bookingDate))
                 {
                     // Copiar los eventos existentes a una nueva lista
@@ -122,9 +121,32 @@ public partial class TableView : ContentPage
 
             var AddBookingResponse = await _client.PostAsync(Constants.BaseUrl + Constants.AddBooking, json);
 
+            var jsonBill = new StringContent(JsonConvert.SerializeObject(new
+            {
+                MesaId = int.Parse(MesaId.Text),
+                UsuarioId = App.UserID,
+                Estado = "Pendiente",
+                Impuestos = 1.19,
+                Total = 0,
+                Fecha = DateTime.Now,
+            }), Encoding.UTF8, "application/json");
+
+            await DisplayAlert("Info", Constants.BaseUrl + Constants.Bill, "Ok");
+            var AddBillResponse = await _client.PostAsync(Constants.BaseUrl + Constants.Bill, jsonBill);
+
+            if (AddBillResponse.IsSuccessStatusCode)
+            {
+                Extra.ShowToast("Factura agregada exitosamente");
+            }
+            else
+            {
+                await DisplayAlert("Error", "Error al agregar la factura", "Ok");
+            }
+
             if (AddBookingResponse.IsSuccessStatusCode)
             {
-                await DisplayAlert("Éxito", $"Reserva agregada exitosamente para el {ReserveDate.Date} a las {ReserveHour.Time}.", "Ok");
+                Extra.ShowToast($"Reserva agregada exitosamente para el {ReserveDate.Date} a las {ReserveHour.Time}.");
+                await Navigation.PopAsync();
             }
             else
             {
@@ -146,7 +168,7 @@ public partial class TableView : ContentPage
 
     public class EventModel
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public TimeSpan Hour { get; set; }
     }
 }

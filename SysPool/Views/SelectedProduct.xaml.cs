@@ -53,7 +53,7 @@ public partial class SelectedProduct : BottomSheet
             await _dbService.AddProduct(new ProductToBuy
             {
                 idProducto = int.Parse(ProductId.Text),
-                idUsuario = 123,
+                idUsuario = App.UserID,
                 nombreProducto = ProductName.Text,
                 cantidadSeleccionada = int.Parse(quantityLabel.Text),
                 imagenProducto = imagePath,
@@ -84,7 +84,7 @@ public partial class SelectedProduct : BottomSheet
                 JsonConvert.SerializeObject(new
                 {
                     idProducto = ProductId.Text,
-                    idUsuario = 123,
+                    idUsuario = App.UserID,
                     nombreProductoComprado = ProductName.Text,
                     cantidadComprada = quantityLabel.Text,
                     total = ProductPrice.Text
@@ -92,8 +92,12 @@ public partial class SelectedProduct : BottomSheet
 
             if (response.IsSuccessStatusCode)
             {
-                Extra.ShowToast("Product purchased successfully");
-                await Navigation.PopAsync();
+                Extra.ShowToast("Producto agregado a la reserva");
+                await DismissAsync();
+            }
+            else
+            {
+                Extra.ShowToast("Error al agregar el producto a la reserva");
             }
         }
         catch (Exception ex)
